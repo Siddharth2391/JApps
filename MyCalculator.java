@@ -1,343 +1,210 @@
-package com.javatpoint;
-
-/*********************************************
-Save this file as MyCalculator.java
-to compile it use
-	javac MyCalculator.java
-to use the calcuator do this
-	java MyCalculator
-
-**********************************************/
-import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
-/*********************************************/
 
-public class MyCalculator extends Frame
+
+class MyCalculator implements ActionListener
 {
+    JFrame f;
+    JTextField t;
+    JButton b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,bdiv,bmul,bsub,badd,bdec,beq,bdel,bclr;
 
-public boolean setClear=true;
-double number, memValue;
-char op;
+    static double a=0,b=0,result=0;
+    static int operator=0;
 
-String digitButtonText[] = {"7", "8", "9", "4", "5", "6", "1", "2", "3", "0", "+/-", "." };
-String operatorButtonText[] = {"/", "sqrt", "*", "%", "-", "1/X", "+", "=" };
-String memoryButtonText[] = {"MC", "MR", "MS", "M+" };
-String specialButtonText[] = {"Backspc", "C", "CE" };
+    MyCalculator()
+    {
+        f=new JFrame("Calculator");
+        t=new JTextField();
+        b1=new JButton("1");
+        b2=new JButton("2");
+        b3=new JButton("3");
+        b4=new JButton("4");
+        b5=new JButton("5");
+        b6=new JButton("6");
+        b7=new JButton("7");
+        b8=new JButton("8");
+        b9=new JButton("9");
+        b0=new JButton("0");
+        bdiv=new JButton("/");
+        bmul=new JButton("*");
+        bsub=new JButton("-");
+        badd=new JButton("+");
+        bdec=new JButton(".");
+        beq=new JButton("=");
+        bdel=new JButton("Delete");
+        bclr=new JButton("Clear");
 
-MyDigitButton digitButton[]=new MyDigitButton[digitButtonText.length];
-MyOperatorButton operatorButton[]=new MyOperatorButton[operatorButtonText.length];
-MyMemoryButton memoryButton[]=new MyMemoryButton[memoryButtonText.length];
-MySpecialButton specialButton[]=new MySpecialButton[specialButtonText.length];
+        t.setBounds(30,40,280,30);
+        b7.setBounds(40,100,50,40);
+        b8.setBounds(110,100,50,40);
+        b9.setBounds(180,100,50,40);
+        bdiv.setBounds(250,100,50,40);
 
-Label displayLabel=new Label("0",Label.RIGHT);
-Label memLabel=new Label(" ",Label.RIGHT);
+        b4.setBounds(40,170,50,40);
+        b5.setBounds(110,170,50,40);
+        b6.setBounds(180,170,50,40);
+        bmul.setBounds(250,170,50,40);
 
-final int FRAME_WIDTH=325,FRAME_HEIGHT=325;
-final int HEIGHT=30, WIDTH=30, H_SPACE=10,V_SPACE=10;
-final int TOPX=30, TOPY=50;
-///////////////////////////
-MyCalculator(String frameText)//constructor
-{
-super(frameText);
+        b1.setBounds(40,240,50,40);
+        b2.setBounds(110,240,50,40);
+        b3.setBounds(180,240,50,40);
+        bsub.setBounds(250,240,50,40);
 
-int tempX=TOPX, y=TOPY;
-displayLabel.setBounds(tempX,y,240,HEIGHT);
-displayLabel.setBackground(Color.BLUE);
-displayLabel.setForeground(Color.WHITE);
-add(displayLabel);
+        bdec.setBounds(40,310,50,40);
+        b0.setBounds(110,310,50,40);
+        beq.setBounds(180,310,50,40);
+        badd.setBounds(250,310,50,40);
 
-memLabel.setBounds(TOPX,  TOPY+HEIGHT+ V_SPACE,WIDTH, HEIGHT);
-add(memLabel);
+        bdel.setBounds(60,380,100,40);
+        bclr.setBounds(180,380,100,40);
 
-// set Co-ordinates for Memory Buttons
-tempX=TOPX;	
-y=TOPY+2*(HEIGHT+V_SPACE);
-for(int i=0; i<memoryButton.length; i++)
-{
-memoryButton[i]=new MyMemoryButton(tempX,y,WIDTH,HEIGHT,memoryButtonText[i], this);
-memoryButton[i].setForeground(Color.RED);
-y+=HEIGHT+V_SPACE;
+        f.add(t);
+        f.add(b7);
+        f.add(b8);
+        f.add(b9);
+        f.add(bdiv);
+        f.add(b4);
+        f.add(b5);
+        f.add(b6);
+        f.add(bmul);
+        f.add(b1);
+        f.add(b2);
+        f.add(b3);
+        f.add(bsub);
+        f.add(bdec);
+        f.add(b0);
+        f.add(beq);
+        f.add(badd);
+        f.add(bdel);
+        f.add(bclr);
+
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setSize(350,500);
+        //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setResizable(false);
+
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+        b3.addActionListener(this);
+        b4.addActionListener(this);
+        b5.addActionListener(this);
+        b6.addActionListener(this);
+        b7.addActionListener(this);
+        b8.addActionListener(this);
+        b9.addActionListener(this);
+        b0.addActionListener(this);
+        badd.addActionListener(this);
+        bdiv.addActionListener(this);
+        bmul.addActionListener(this);
+        bsub.addActionListener(this);
+        bdec.addActionListener(this);
+        beq.addActionListener(this);
+        bdel.addActionListener(this);
+        bclr.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource()==b1)
+            t.setText(t.getText().concat("1"));
+
+        if(e.getSource()==b2)
+            t.setText(t.getText().concat("2"));
+
+        if(e.getSource()==b3)
+            t.setText(t.getText().concat("3"));
+
+        if(e.getSource()==b4)
+            t.setText(t.getText().concat("4"));
+
+        if(e.getSource()==b5)
+            t.setText(t.getText().concat("5"));
+
+        if(e.getSource()==b6)
+            t.setText(t.getText().concat("6"));
+
+        if(e.getSource()==b7)
+            t.setText(t.getText().concat("7"));
+
+        if(e.getSource()==b8)
+            t.setText(t.getText().concat("8"));
+
+        if(e.getSource()==b9)
+            t.setText(t.getText().concat("9"));
+
+        if(e.getSource()==b0)
+            t.setText(t.getText().concat("0"));
+
+        if(e.getSource()==bdec)
+            t.setText(t.getText().concat("."));
+
+        if(e.getSource()==badd)
+        {
+            a=Double.parseDouble(t.getText());
+            operator=1;
+            t.setText("");
+        }
+
+        if(e.getSource()==bsub)
+        {
+            a=Double.parseDouble(t.getText());
+            operator=2;
+            t.setText("");
+        }
+
+        if(e.getSource()==bmul)
+        {
+            a=Double.parseDouble(t.getText());
+            operator=3;
+            t.setText("");
+        }
+
+        if(e.getSource()==bdiv)
+        {
+            a=Double.parseDouble(t.getText());
+            operator=4;
+            t.setText("");
+        }
+
+        if(e.getSource()==beq)
+        {
+            b=Double.parseDouble(t.getText());
+
+            switch(operator)
+            {
+                case 1: result=a+b;
+                    break;
+
+                case 2: result=a-b;
+                    break;
+
+                case 3: result=a*b;
+                    break;
+
+                case 4: result=a/b;
+                    break;
+
+                default: result=0;
+            }
+
+            t.setText(""+result);
+        }
+
+        if(e.getSource()==bclr)
+            t.setText("");
+
+        if(e.getSource()==bdel)
+        {
+            String s=t.getText();
+            t.setText("");
+            for(int i=0;i<s.length()-1;i++)
+                t.setText(t.getText()+s.charAt(i));
+        }
+    }
+
+    public static void main(String...s)
+    {
+        new MyCalculator();
+    }
 }
-
-//set Co-ordinates for Special Buttons
-tempX=TOPX+1*(WIDTH+H_SPACE); y=TOPY+1*(HEIGHT+V_SPACE);
-for(int i=0;i<specialButton.length;i++)
-{
-specialButton[i]=new MySpecialButton(tempX,y,WIDTH*2,HEIGHT,specialButtonText[i], this);
-specialButton[i].setForeground(Color.RED);
-tempX=tempX+2*WIDTH+H_SPACE;
-}
-
-//set Co-ordinates for Digit Buttons
-int digitX=TOPX+WIDTH+H_SPACE;
-int digitY=TOPY+2*(HEIGHT+V_SPACE);
-tempX=digitX;  y=digitY;
-for(int i=0;i<digitButton.length;i++)
-{
-digitButton[i]=new MyDigitButton(tempX,y,WIDTH,HEIGHT,digitButtonText[i], this);
-digitButton[i].setForeground(Color.BLUE);
-tempX+=WIDTH+H_SPACE;
-if((i+1)%3==0){tempX=digitX; y+=HEIGHT+V_SPACE;}
-}
-
-//set Co-ordinates for Operator Buttons
-int opsX=digitX+2*(WIDTH+H_SPACE)+H_SPACE;
-int opsY=digitY;
-tempX=opsX;  y=opsY;
-for(int i=0;i<operatorButton.length;i++)
-{
-tempX+=WIDTH+H_SPACE;
-operatorButton[i]=new MyOperatorButton(tempX,y,WIDTH,HEIGHT,operatorButtonText[i], this);
-operatorButton[i].setForeground(Color.RED);
-if((i+1)%2==0){tempX=opsX; y+=HEIGHT+V_SPACE;}
-}
-
-addWindowListener(new WindowAdapter()
-{
-public void windowClosing(WindowEvent ev)
-{System.exit(0);}
-});
-
-setLayout(null);
-setSize(FRAME_WIDTH,FRAME_HEIGHT);
-setVisible(true);
-}
-//////////////////////////////////
-static String getFormattedText(double temp)
-{
-String resText=""+temp;
-if(resText.lastIndexOf(".0")>0)
-	resText=resText.substring(0,resText.length()-2);
-return resText;
-}
-////////////////////////////////////////
-public static void main(String []args)
-{
-new MyCalculator("Calculator");
-}
-}
-
-/*******************************************/
-
-class MyDigitButton extends Button implements ActionListener
-{
-MyCalculator cl;
-
-//////////////////////////////////////////
-MyDigitButton(int x,int y, int width,int height,String cap, MyCalculator clc)
-{
-super(cap);
-setBounds(x,y,width,height);
-this.cl=clc;
-this.cl.add(this);
-addActionListener(this);
-}
-////////////////////////////////////////////////
-static boolean isInString(String s, char ch)
-{
-for(int i=0; i<s.length();i++) if(s.charAt(i)==ch) return true;
-return false;
-}
-/////////////////////////////////////////////////
-public void actionPerformed(ActionEvent ev)
-{
-String tempText=((MyDigitButton)ev.getSource()).getLabel();
-
-if(tempText.equals("."))
-{
- if(cl.setClear) 
-	{cl.displayLabel.setText("0.");cl.setClear=false;}
- else if(!isInString(cl.displayLabel.getText(),'.'))
-	cl.displayLabel.setText(cl.displayLabel.getText()+".");
- return;
-}
-
-int index=0;
-try{
-        index=Integer.parseInt(tempText);
-    }catch(NumberFormatException e){return;}
-
-if (index==0 && cl.displayLabel.getText().equals("0")) return;
-
-if(cl.setClear)
-        	{cl.displayLabel.setText(""+index);cl.setClear=false;}
-else
-	cl.displayLabel.setText(cl.displayLabel.getText()+index);
-}//actionPerformed
-}//class defination
-
-/********************************************/
-
-class MyOperatorButton extends Button implements ActionListener
-{
-MyCalculator cl;
-
-MyOperatorButton(int x,int y, int width,int height,String cap, MyCalculator clc)
-{
-super(cap);
-setBounds(x,y,width,height);
-this.cl=clc;
-this.cl.add(this);
-addActionListener(this);
-}
-///////////////////////
-public void actionPerformed(ActionEvent ev)
-{
-String opText=((MyOperatorButton)ev.getSource()).getLabel();
-
-cl.setClear=true;
-double temp=Double.parseDouble(cl.displayLabel.getText());
-
-if(opText.equals("1/x"))
-	{
-	try
-		{double tempd=1/(double)temp;
-		cl.displayLabel.setText(MyCalculator.getFormattedText(tempd));}
- 	catch(ArithmeticException excp)
-                		{cl.displayLabel.setText("Divide by 0.");}
-	return;
-	}
-if(opText.equals("sqrt"))
-	{
-	try
-		{double tempd=Math.sqrt(temp);
-		cl.displayLabel.setText(MyCalculator.getFormattedText(tempd));}
-        	catch(ArithmeticException excp)
-	                {cl.displayLabel.setText("Divide by 0.");}
-	return;
-	}
-if(!opText.equals("="))
-	{
-	cl.number=temp;
-	cl.op=opText.charAt(0);
-	return;
-	}
-// process = button pressed
-switch(cl.op)
-{
-case '+':
-	temp+=cl.number;break;
-case '-':
-	temp=cl.number-temp;break;
-case '*':
-	temp*=cl.number;break;
-case '%':
-	try{temp=cl.number%temp;}
-	catch(ArithmeticException excp)
-		{cl.displayLabel.setText("Divide by 0."); return;}
-	break;
-case '/':
-	try{temp=cl.number/temp;}
-        catch(ArithmeticException excp)
-                {cl.displayLabel.setText("Divide by 0."); return;}
-	break;
-}//switch
-
-cl.displayLabel.setText(MyCalculator.getFormattedText(temp));
-//cl.number=temp;
-}//actionPerformed
-}//class
-
-/****************************************/
-
-class MyMemoryButton extends Button implements ActionListener
-{
-MyCalculator cl;
-
-/////////////////////////////////
-MyMemoryButton(int x,int y, int width,int height,String cap, MyCalculator clc)
-{
-super(cap);
-setBounds(x,y,width,height);
-this.cl=clc;
-this.cl.add(this);
-addActionListener(this);
-}
-////////////////////////////////////////////////
-public void actionPerformed(ActionEvent ev)
-{
-char memop=((MyMemoryButton)ev.getSource()).getLabel().charAt(1);
-
-cl.setClear=true;
-double temp=Double.parseDouble(cl.displayLabel.getText());
-
-switch(memop)
-{
-case 'C': 
-	cl.memLabel.setText(" ");cl.memValue=0.0;break;
-case 'R': 
-	cl.displayLabel.setText(MyCalculator.getFormattedText(cl.memValue));break;
-case 'S':
-	cl.memValue=0.0;
-case '+': 
-	cl.memValue+=Double.parseDouble(cl.displayLabel.getText());
-	if(cl.displayLabel.getText().equals("0") || cl.displayLabel.getText().equals("0.0")  )
-		cl.memLabel.setText(" ");
-	else 
-		cl.memLabel.setText("M");	
-	break;
-}//switch
-}//actionPerformed
-}//class
-
-/*****************************************/
-
-class MySpecialButton extends Button implements ActionListener
-{
-MyCalculator cl;
-
-MySpecialButton(int x,int y, int width,int height,String cap, MyCalculator clc)
-{
-super(cap);
-setBounds(x,y,width,height);
-this.cl=clc;
-this.cl.add(this);
-addActionListener(this);
-}
-//////////////////////
-static String backSpace(String s)
-{
-String Res="";
-for(int i=0; i<s.length()-1; i++) Res+=s.charAt(i);
-return Res;
-}
-
-//////////////////////////////////////////////////////////
-public void actionPerformed(ActionEvent ev)
-{
-String opText=((MySpecialButton)ev.getSource()).getLabel();
-//check for backspace button
-if(opText.equals("Backspc"))
-{
-String tempText=backSpace(cl.displayLabel.getText());
-if(tempText.equals("")) 
-	cl.displayLabel.setText("0");
-else 
-	cl.displayLabel.setText(tempText);
-return;
-}
-//check for "C" button i.e. Reset
-if(opText.equals("C")) 
-{
-cl.number=0.0; cl.op=' '; cl.memValue=0.0;
-cl.memLabel.setText(" ");
-}
-
-//it must be CE button pressed
-cl.displayLabel.setText("0");cl.setClear=true;
-}//actionPerformed
-}//class
-
-/*********************************************
-
-Features not implemented and few bugs
-
-i)  No coding done for "+/-" button.
-ii) Menubar is not included.
-iii)Not for Scientific calculation
-iv)Some of the computation may lead to unexpected result
-   due to the representation of Floating point numbers in computer
-   is an approximation to the given value that can be stored
-   physically in memory.
-
-***********************************************/
